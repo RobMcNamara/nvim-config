@@ -1,5 +1,15 @@
+print("hello from default")
 vim.opt.relativenumber = true
 
-vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
-vim.keymap.set('n', '<leader>kl', require('neo-tree').reveal_current_file, {desc = 'Show current file in neo'})
-vim.keymap.set('n', '<leader>lk', require('neo-tree').close_all, {desc = 'Close all neo'})
+
+  local nmap = function(keys, func, desc)
+    if desc then
+      desc = 'LSP: ' .. desc
+    end
+
+    vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+  end
+
+nmap('<leader>kl', "<cmd>Neotree toggle<cr>", 'blah')
+
+-- vim.keymap.set('n', '<leader>lk', require('neo-tree').close_all, {desc = 'Close all neo'})
