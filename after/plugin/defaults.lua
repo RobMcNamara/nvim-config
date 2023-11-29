@@ -1,4 +1,3 @@
-print("hello from default")
 vim.opt.relativenumber = true
 
 
