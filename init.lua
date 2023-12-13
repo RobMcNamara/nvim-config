@@ -38,6 +38,7 @@ require('lazy').setup({
 
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
+  -- primeagen refactoring. not sure this is good yet. 
   {
 		"ThePrimeagen/refactoring.nvim",
 		keys = {
