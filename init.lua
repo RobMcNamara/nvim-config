@@ -31,13 +31,22 @@ vim.opt.rtp:prepend(lazypath)
 --    as they will be available in your neovim runtime.
 require('lazy').setup({
   -- NOTE: First, some plugins that don't require any configuration
-
-  -- Git related plugins
+    -- Git related plugins
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
+  { "catppuccin/nvim",      name = "catppuccin", priority = 1000 },
 
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
+  -- should do autopair tags for html, doens't work right now
+  {
+    'windwp/nvim-autopairs',
+    event = "InsertEnter",
+    opts = {} -- this is equalent to setup({}) function
+  },
+  'nvim-tree/nvim-web-devicons',
+  'jose-elias-alvarez/null-ls.nvim',
+  'MunifTanjim/prettier.nvim',
   -- primeagen refactoring. not sure this is good yet. 
   {
 		"ThePrimeagen/refactoring.nvim",
@@ -94,11 +103,11 @@ require('lazy').setup({
     },
   },
 
-  { -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
+  {
+    "catppuccin/nvim",
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'onedark'
+      vim.cmd.colorscheme 'catppuccin'
     end,
   },
 
@@ -150,6 +159,27 @@ require('lazy').setup({
     },
     config = function()
       pcall(require('nvim-treesitter.install').update { with_sync = true })
+    end,
+  },
+  {
+    "nvim-neorg/neorg",
+    build = ":Neorg sync-parsers",
+    -- tag = "*",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("neorg").setup {
+        load = {
+          ["core.defaults"] = {}, -- Loads default behaviour
+          ["core.concealer"] = {}, -- Adds pretty icons to your documents
+          ["core.dirman"] = { -- Manages Neorg workspaces
+            config = {
+              workspaces = {
+                notes = "~/notes",
+              },
+            },
+          },
+        },
+      }
     end,
   },
 
@@ -392,11 +422,11 @@ end
 --  Add any additional override configuration in the following tables. They will be passed to
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
-  -- clangd = {},
+   clangd = {},
   -- gopls = {},
   -- pyright = {},
   -- rust_analyzer = {},
-  -- tsserver = {},
+   tsserver = {},
 
   lua_ls = {
     Lua = {
